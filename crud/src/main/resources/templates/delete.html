@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete</title>
+</head>
+<body>
+  <h1>Delete Student [[${student.name}]]?</h1>
+  <form th:action="@{/{id}/delete (id = ${student.id})}" method = "post">
+    <input type="submit" value="Delete">
+    <a th:href="@{/{id}/read (id = ${student.id})}">Back</a>
+  </form>
+</body>
+</html>
