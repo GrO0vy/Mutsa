@@ -46,6 +46,12 @@ public class AppController {
         this.service.deleteStudent(1L);
         return "done-delete";
     }
+
+    @GetMapping("find")
+    public @ResponseBody String find(){
+        this.service.findAllByTest();
+        return "done-find";
+    }
     public AppController(AppService service){
         this.service = service;
     }

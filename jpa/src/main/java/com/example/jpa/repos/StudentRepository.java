@@ -16,4 +16,10 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
         List<StudentEntity> findAllByOrderByName();
         //SELECT * FROM students ORDER BY age DESC;
         List<StudentEntity> findAllByOrderByAgeDesc();
+
+        //SELECT * FROM Students WHERE age < 21;
+        List<StudentEntity> findAllByAgeLessThan(Integer age);
+
+        // SELECT * FROM students WHERE phone LIKE '010-%'
+        List<StudentEntity> findAllByPhoneLike(String phone);
 }

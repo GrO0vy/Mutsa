@@ -77,4 +77,29 @@ public class AppService {
             System.out.println("could not find");
         }
     }
+
+    public void findAllByTest(){
+        List<StudentEntity> studentEntities =
+                this.studentRepository.findAllByOrderByName();
+        for(int i = 0; i < 5; i++){
+            System.out.println(studentEntities.get(i));
+        }
+
+        studentEntities = this.studentRepository.findAllByOrderByAgeDesc();
+        for (int i = 0 ; i < 6; i++){
+            System.out.println(studentEntities.get(i));
+        }
+
+        studentEntities = this.studentRepository.findAllByAgeLessThan(21);
+        for(int i = 0; i < 5; i++){
+            System.out.println(studentEntities.get(i));
+        }
+
+        studentEntities = this.studentRepository.findAllByPhoneLike("010-%");
+        for(int i = 0; i < 5; i++){
+            System.out.println(studentEntities.get(i));
+        }
+    }
+
+
 }
