@@ -29,7 +29,7 @@ public class MybatisApplication {
 		System.out.println(dao.readXML(1L));
 		System.out.println(dao.readXML(2L));
 
-		dao.createStudentXML("lee", 25, "010-2880-5432", "lmc2819@naver.com");
+		dao.createStudentXML(new Student());
 		System.out.println(dao.readAllXml());
 	}
 

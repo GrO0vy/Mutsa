@@ -7,5 +7,5 @@ import java.util.List;
 public interface StudentXmlMapper {
     List<Student> selectStudentAll();
     Student selectStudent(Long id);
-    void insertStudent(String name, Integer age, String phone, String email);
+    void insertStudent(Student student);
 }

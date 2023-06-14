@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public class StudentDao {
-    private final SqlSessionFactory  sessionFactory;
+    private final SqlSessionFactory sessionFactory;
     public StudentDao(SqlSessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
     }
@@ -37,6 +37,20 @@ public class StudentDao {
         }
     }
 
+    public void modifyStudent(Student student){
+        try(SqlSession session = sessionFactory.openSession()){
+            StudentMapper studentMapper = session.getMapper(StudentMapper.class);
+            studentMapper.updateStudent(student);
+        }
+    }
+
+    public void deleteStudent(Long id){
+        try(SqlSession session = sessionFactory.openSession()){
+            StudentMapper studentMapper = session.getMapper(StudentMapper.class);
+            studentMapper.deleteStudent(id);
+        }
+    }
+
     public List<Student> readAllXml(){
         try(SqlSession session = sessionFactory.openSession()){
             StudentXmlMapper studentMapper = session.getMapper(StudentXmlMapper.class);
@@ -51,10 +65,10 @@ public class StudentDao {
         }
     }
 
-    public void createStudentXML(String name, Integer age, String phone, String email){
+    public void createStudentXML(Student student){
         try(SqlSession session = sessionFactory.openSession()){
             StudentXmlMapper studentMapper = session.getMapper(StudentXmlMapper.class);
-            studentMapper.insertStudent(name, age, phone, email);
+            studentMapper.insertStudent(student);
         }
     }
 }

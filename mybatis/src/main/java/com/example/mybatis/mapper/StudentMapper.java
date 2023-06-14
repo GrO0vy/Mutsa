@@ -22,11 +22,11 @@ public interface StudentMapper {
     @Select("SELECT * FROM students WHERE id = #{id}")
     Student selectStudent(Long id);
 
-    @Update("UPDATE students SEt" +
+    @Update("UPDATE students SET" +
             "name = #{name}," +
             "age = #{age}" +
             "phone = #{phone}," +
-            "emai; = #{email}" +
+            "email = #{email}" +
             "WHERE id = #{id}")
     void updateStudent(Student student);
 
