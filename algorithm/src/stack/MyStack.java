@@ -1,3 +1,5 @@
+package stack;
+
 public class MyStack {
     // 스택에 데이터가 저장되는 곳
     private final int[] arr =  new int[16];
