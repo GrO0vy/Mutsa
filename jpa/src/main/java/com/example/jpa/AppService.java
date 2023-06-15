@@ -1,9 +1,11 @@
 package com.example.jpa;
 
+import com.example.jpa.dto.StudentDto;
 import com.example.jpa.entities.StudentEntity;
 import com.example.jpa.repos.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +33,20 @@ public class AppService {
     }
 
     // READ ALL
-    public List<StudentEntity> readStudentAll(){
+    public List<StudentDto> readStudentAll(){
         System.out.println(this.studentRepository.findAll());
         List<StudentEntity> studentEntityList = this.studentRepository.findAll();
-        return studentEntityList;
+
+        List<StudentDto> studentDtoList = new ArrayList<>();
+        for(StudentEntity studentEntity : this.studentRepository.findAll()){
+            StudentDto studentDto = new StudentDto();
+            studentDto.setId(studentEntity.getId());
+            studentDto.setName(studentEntity.getName());
+            studentDto.setEmail(studentEntity.getEmail());
+            studentDtoList.add(studentDto);
+        }
+        //return studentEntityList;
+        return studentDtoList;
     }
 
     // READ
