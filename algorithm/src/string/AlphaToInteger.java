@@ -8,7 +8,7 @@ public class AlphaToInteger {
     public int atoi(String value){
         int number = 0;
         // TODO 첫번째 문자를 사전에 확인
-        boolean isNegative = value.charAt(0) == '-' ? true : false;
+        boolean isNegative = value.charAt(0) == '-';
         int i = isNegative ? 1 : 0;
 
         // TODO 문자열을 한 글자 ( 한 자리 )씩 확인
