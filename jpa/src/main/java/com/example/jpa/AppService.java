@@ -31,8 +31,10 @@ public class AppService {
     }
 
     // READ ALL
-    public void readStudentAll(){
+    public List<StudentEntity> readStudentAll(){
         System.out.println(this.studentRepository.findAll());
+        List<StudentEntity> studentEntityList = this.studentRepository.findAll();
+        return studentEntityList;
     }
 
     // READ
