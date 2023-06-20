@@ -2,6 +2,9 @@ package com.example.http;
 
 import com.example.http.dto.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,4 +69,32 @@ public class BodyController {
 
         return response;
     }
+
+    // @ResponseBody는 요청의 HTTP body 만 설정한다.
+    // Header를 추가하거나 Status Code를 고르고 싶을 때 사용
+    // ResponseEntity<T>
+    @PostMapping("/entity")
+    public ResponseEntity<ResponseDto> entity(@RequestBody ArticleDto requestDto){
+        log.info(requestDto.toString());
+        ResponseDto response = new ResponseDto();
+        response.setStatus(200);
+        response.setMessage("success");
+
+        // ResponseEntity 객체 그냥 쓰기
+//        ResponseEntity<ResponseDto> responseEntity = new ResponseEntity<>(response, HttpStatus.CREATED);
+//         return responseEntity;
+
+        // 커스텀 헤더 만들고 함께 응답하기
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("x-likelion-custom","Hello World!");
+//        return new ResponseEntity<>(response,headers,HttpStatus.ACCEPTED);
+
+        // Builder 사용하기
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header("x-likelion-one","1")
+                .headers(headers)
+                .body(response);
+    }
+
+
 }
