@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@Controller
-//@RestController
+//@Controller
+@RestController
 public class BodyController {
     // `/body`로 요청이 들어왔을 때, ResponseDto 데이터를 표현한 JSON 응답을 반환하는 메서드
     @PostMapping("/body")
     // HTTP 응답의 Body임을 나타내는 어노테이션
-    public @ResponseBody ResponseDto body(@RequestBody ArticleDto requestDto){
+    public ResponseDto body(@RequestBody ArticleDto requestDto){
 
         log.info(requestDto.toString());
         ResponseDto response = new ResponseDto();
@@ -35,7 +35,7 @@ public class BodyController {
 //    }
 
     @PostMapping("/body-2")
-    public @ResponseBody ResponseDto body2(@RequestBody UserDto request){
+    public ResponseDto body2(@RequestBody UserDto request){
         log.info("POST /body-2 " + request.toString());
         ResponseDto response = new ResponseDto();
         response.setMessage("success");
@@ -45,7 +45,7 @@ public class BodyController {
     }
 
     @PostMapping("/body-3")
-    public @ResponseBody ResponseDto body3(@RequestBody ArticleWithComment request){
+    public ResponseDto body3(@RequestBody ArticleWithComment request){
         log.info("POST /body-3 " + request.toString());
 
         ResponseDto response = new ResponseDto();
@@ -56,7 +56,7 @@ public class BodyController {
     }
 
     @PostMapping("/body-4")
-    @ResponseBody
+    //@ResponseBody
     public ResponseDto body4(@RequestBody ArticleComplexDto request){
         log.info("POST /body-4 " + request.toString());
 
