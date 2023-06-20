@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ArticleDto {
+public class ArticleWithComment {
     private String title;
     private String content;
+    private String writer;
+    private List<String> comments = new ArrayList<>();
 }
