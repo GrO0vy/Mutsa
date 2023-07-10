@@ -1,5 +1,6 @@
 package com.example.auth.jwt;
 
+import com.example.auth.entity.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -21,7 +22,7 @@ public class JwtTokenUtils {
 
     public JwtTokenUtils(@Value("${jwt.secret}") String jwtSecret){
         log.info(jwtSecret);
-        this.signinKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+        this.signinKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
     // 주어진 사용자 정보를 바탕으로 JWT를 문자열로 생성
@@ -33,6 +34,8 @@ public class JwtTokenUtils {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plusSeconds(3600)));
+
+        jwtClaims.put("eml",((CustomUserDetails)userDetails).getEmail());
 
         return Jwts.builder()
                 .setClaims(jwtClaims)

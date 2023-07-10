@@ -29,16 +29,16 @@ public class WebSecurityConfig {
         // anonymous() == 인증되지 않은 사용자만 허가
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authHttp -> authHttp
-                .requestMatchers("/no-auth")
-                .permitAll()
-                .requestMatchers("/re-auth",
-                        "/users/my-profile")
-                .authenticated()
-                .requestMatchers("/",
-                        "/users/register")
-                .anonymous()
+                                .requestMatchers("/no-auth")
+                                .permitAll()
+                                .requestMatchers("/",
+                                        "/users/register",
+                                        "/token/issue")
+                                .anonymous()
+                                .anyRequest()
+                                .authenticated()
+                )
                 // HTTP 요청 허가 관련 설정
-        )
         // form 을 이용한 로그인 관련 설정
                 .formLogin(
                         formLogin -> formLogin
@@ -62,7 +62,7 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    @Bean
+    //@Bean
     // 사용자 관리를 위한 인터페이스 구현체 Bean
     public UserDetailsManager userDetailsManager(
         PasswordEncoder passwordEncoder

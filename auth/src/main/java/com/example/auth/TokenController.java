@@ -37,7 +37,7 @@ public class TokenController {
         UserDetails userDetails = manager.loadUserByUsername(dto.getUsername());
 
         // 기록된 비밀번호와 실제 비밀번호가 다를때
-        if(dto.getPassword().equals(userDetails.getPassword()))
+        if(!encoder.matches(dto.getPassword(), userDetails.getPassword()))
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 
         JwtTokenDto response = new JwtTokenDto();
