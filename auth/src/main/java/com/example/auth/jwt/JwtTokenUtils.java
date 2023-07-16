@@ -2,6 +2,7 @@ package com.example.auth.jwt;
 
 import com.example.auth.entity.CustomUserDetails;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -18,11 +19,17 @@ import java.util.Date;
 @Slf4j
 @Component
 public class JwtTokenUtils {
-    private final Key signinKey;
+    private final Key signingKey;
+    // JWT 해석기
+    private final JwtParser jwtParser;
 
     public JwtTokenUtils(@Value("${jwt.secret}") String jwtSecret){
         log.info(jwtSecret);
-        this.signinKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        this.signingKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        this.jwtParser = Jwts
+                .parserBuilder()
+                .setSigningKey(this.signingKey)
+                .build();
     }
 
     // 주어진 사용자 정보를 바탕으로 JWT를 문자열로 생성
@@ -39,7 +46,25 @@ public class JwtTokenUtils {
 
         return Jwts.builder()
                 .setClaims(jwtClaims)
-                .signWith(signinKey)
+                .signWith(signingKey)
                 .compact();
+    }
+
+    // JWT 가 유효한지 판단하는 메소드
+    public boolean validate(String token){
+        try{
+            // JWT 해석기로 토큰을 해석한다.
+            jwtParser.parseClaimsJws(token);
+            // 해석에 성공하면 유효한 JWT 이므로 true 반환
+            return true;
+        }catch(Exception e){
+            log.warn("invalid jwt: {}",e.getClass());
+            // 해석에 실패하면 예외가 일어나고 유효하지 않다는 의미이므로 false 반환
+            return false;
+        }
+    }
+
+    public Claims parseClaims(String token){
+        return jwtParser.parseClaimsJws(token).getBody();
     }
 }

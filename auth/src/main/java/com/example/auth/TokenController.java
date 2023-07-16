@@ -5,6 +5,7 @@ import com.example.auth.jwt.JwtTokenDto;
 import com.example.auth.jwt.JwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -16,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
-@RequestMapping("token")
+@RequestMapping("/token")
 public class TokenController {
     // UserDetailsManager
     // PasswordEncoder
@@ -45,4 +46,13 @@ public class TokenController {
         return response;
     }
 
+    @PostMapping("/secured")
+    public String checkSecure(){
+        log.info(SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName());
+
+        return "success";
+    }
 }
